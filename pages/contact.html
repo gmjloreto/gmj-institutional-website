@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato | GMJ Loreto</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="../index.html">GMJ<span>LORETO</span></a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html">Início</a>
+                <a href="mission.html">Missões</a>
+                <a href="content.html">Conteúdos</a>
+                <a href="contact.html" class="active">Contato</a>
+            </div>
+            <div class="nav-actions">
+                <a href="contact.html" class="btn btn-primary">Começar agora</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="section container">
+        <div class="hero-content header-content-left">
+            <span class="content-tag">Fale Conosco</span>
+            <h1 class="text-4xl">Entre em Contato</h1>
+            <p class="p-no-margin">Estamos prontos para ouvir você. Conecte-se com a nossa missão.</p>
+        </div>
+    </header>
+
+    <!-- Contact Section -->
+    <section class="section container section-no-top-padding">
+        <div class="contact-grid">
+            <!-- Info -->
+            <div class="reveal">
+                <div class="contact-info-card">
+                    <h3 class="mb-2rem">Canais Diretos</h3>
+                    
+                    <div class="contact-method">
+                        <div class="contact-method-icon">📧</div>
+                        <div class="contact-method-content">
+                            <h4>Email Institucional</h4>
+                            <p>contato@gmjloreto.com.br</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-method-icon">📱</div>
+                        <div class="contact-method-content">
+                            <h4>WhatsApp</h4>
+                            <p>+55 (11) 99999-9999</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-method-icon">📍</div>
+                        <div class="contact-method-content">
+                            <h4>Localização</h4>
+                            <p>Av. da Missão, 1000 - São Paulo, SP</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-top">
+                        <p class="text-sm text-gray-500">Nosso tempo médio de resposta é de 24 horas úteis.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <div class="form-card reveal delay-150">
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nome Completo</label>
+                        <input type="text" id="name" placeholder="Seu nome aqui" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail de Contato</label>
+                        <input type="email" id="email" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Assunto</label>
+                        <input type="text" id="subject" placeholder="Como podemos ajudar?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Sua Mensagem</label>
+                        <textarea id="message" rows="5" placeholder="Descreva seu interesse ou dúvida..." required></textarea>
+                    </div>
+                    <button type="submit" id="submit-btn" class="btn btn-accent w-100 mt-4">
+                        <span>Enviar Mensagem</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">GMJ<span>LORETO</span></div>
+                    <p class="footer-text">Elevando a presença institucional através de design premium e organização estratégica.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Navegação</h5>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Início</a></li>
+                        <li><a href="mission.html">Missões</a></li>
+                        <li><a href="content.html">Conteúdos</a></li>
+                        <li><a href="contact.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Social</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">Facebook</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Admin</h5>
+                    <ul class="footer-links">
+                        <li><a href="admin.html">Acesso Restrito</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 GMJ Loreto. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../config/supabase.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>
