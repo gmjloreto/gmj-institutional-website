@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronograma de Missões | GMJ Loreto</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="../index.html">GMJ<span>LORETO</span></a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html">Início</a>
+                <a href="mission.html" class="active">Missões</a>
+                <a href="content.html">Conteúdos</a>
+                <a href="contact.html">Contato</a>
+            </div>
+            <div class="nav-actions">
+                <a href="contact.html" class="btn btn-primary">Começar agora</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="section container">
+        <div class="hero-content header-content-left">
+            <span class="content-tag">Cronograma Oficial</span>
+            <h1 class="text-4xl">Missões e Atividades</h1>
+            <p class="p-no-margin">Explore nossa agenda mensal. Clique nos dias destacados para ver detalhes de cada ação.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="section container section-no-top-padding">
+        <div class="missions-layout">
+            
+            <!-- Coluna Esquerda: Calendário Compacto -->
+            <aside class="reveal">
+                <div class="calendar-compact">
+                    <div class="calendar-header mb-1-5rem">
+                        <h3 id="current-month-display" class="text-lg">Janeiro 2026</h3>
+                        <div class="flex-gap-10">
+                            <button id="prev-month" class="btn btn-outline btn-small-icon">&lt;</button>
+                            <button id="next-month" class="btn btn-outline btn-small-icon">&gt;</button>
+                        </div>
+                    </div>
+                    <div id="calendar-grid" class="calendar-grid">
+                        <div class="day-header">D</div>
+                        <div class="day-header">S</div>
+                        <div class="day-header">T</div>
+                        <div class="day-header">Q</div>
+                        <div class="day-header">Q</div>
+                        <div class="day-header">S</div>
+                        <div class="day-header">S</div>
+                    </div>
+                    <div class="mt-4 text-sm text-gray-500">
+                        <div class="flex-center justify-start gap-8">
+                            <span class="dot-legend"></span>
+                            Dias com missão
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Coluna Direita: Lista de Missões -->
+            <main class="missions-list-container reveal delay-100">
+                <div class="month-summary-card">
+                    <h3>Destaques do Mês</h3>
+                    <p class="text-sm text-gray-600">Confira as principais atividades programadas para este período. Sua presença faz a diferença!</p>
+                </div>
+
+                <div id="missions-month-list" class="missions-list-grid">
+                    <p class="text-gray-400 text-sm">Selecione um dia no calendário para ver detalhes específicos ou explore as missões abaixo.</p>
+                </div>
+            </main>
+
+        </div>
+    </section>
+
+    <!-- Modal de Detalhes da Missão -->
+    <div id="mission-modal" class="modal">
+        <div class="modal-content">
+            <span class="btn-close-x" onclick="closeMissionModal()">&times;</span>
+            <div id="modal-content-inner">
+                <span id="modal-tag" class="content-tag">Missão Confirmada</span>
+                <h3 id="modal-title" class="modal-title-lg">Título da Missão</h3>
+                <div class="modal-header-meta">
+                    <div>
+                        <label>Data</label>
+                        <p id="modal-date" class="text-bold">--/--/----</p>
+                    </div>
+                    <div>
+                        <label>Horário</label>
+                        <p id="modal-time" class="text-bold">--:--</p>
+                    </div>
+                </div>
+                <div class="modal-desc-box">
+                    <label>Descrição da Atividade</label>
+                    <p id="modal-description">Descrição detalhada...</p>
+                </div>
+                <div id="extra-times-container">
+                    <label>Responsável</label>
+                    <p id="modal-extra-times" class="modal-footer-text">-</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">GMJ<span>LORETO</span></div>
+                    <p class="footer-text">Elevando a presença institucional através de design premium e organização estratégica.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Navegação</h5>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Início</a></li>
+                        <li><a href="mission.html">Missões</a></li>
+                        <li><a href="content.html">Conteúdos</a></li>
+                        <li><a href="contact.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Social</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">Facebook</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Admin</h5>
+                    <ul class="footer-links">
+                        <li><a href="admin.html">Acesso Restrito</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 GMJ Loreto. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../config/supabase.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>
