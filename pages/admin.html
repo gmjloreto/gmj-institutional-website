@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin | GMJ Loreto</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="admin-body">
+
+    <!-- Login Container -->
+    <div id="login-container" class="admin-auth-container">
+        <div class="auth-card">
+            <div class="logo text-center mb-2rem">
+                <a href="../index.html">GMJ<span>LORETO</span></a>
+            </div>
+            <h2 class="text-center mb-1-5rem">Acesso Restrito</h2>
+            <p class="text-center text-sm text-gray-500 mb-2rem">Entre com suas credenciais de administrador.</p>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="login-email" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mt-4">Entrar no Painel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div id="admin-dashboard" class="dashboard-hidden">
+        <nav class="admin-top-nav">
+            <div class="container admin-nav-content">
+                <div class="logo">GMJ<span>DASHBOARD</span></div>
+                <div class="flex-center gap-8">
+                    <span id="user-display" class="text-sm text-gray-500">admin@gmj.com</span>
+                    <button onclick="handleLogout()" class="btn btn-outline" style="padding: 0.5rem 1rem;">Sair</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container section">
+            <div class="admin-sidebar-nav">
+                <div id="tab-events" class="nav-tab active" onclick="switchSection('events')">📅 Missões</div>
+                <div id="tab-config" class="nav-tab" onclick="switchSection('config')">⚙️ Configurações</div>
+            </div>
+
+            <!-- Seção de Missões -->
+            <div id="sec-events" class="admin-section-hidden show">
+                <div class="flex-center justify-between mb-2rem" style="justify-content: space-between;">
+                    <div>
+                        <h2 class="text-4xl">Gerenciar Missões</h2>
+                        <p class="text-gray-500 text-sm">Adicione, edite ou remova atividades do calendário.</p>
+                    </div>
+                    <button onclick="openNewEventModal()" class="btn btn-primary">Nova Missão</button>
+                </div>
+                
+                <div class="admin-table-card">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Evento</th>
+                                <th>Responsável</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-events-list">
+                            <!-- Injetado via app.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Seção de Config -->
+            <div id="sec-config" class="admin-section-hidden">
+                <div class="mb-2rem">
+                    <h2 class="text-4xl">Configurações</h2>
+                    <p class="text-gray-500 text-sm">Atualize informações globais como horários, local e links.</p>
+                </div>
+                <div class="form-card">
+                    <form id="config-manager-form">
+                        <div id="config-inputs-list">
+                            <!-- Injetado via app.js -->
+                        </div>
+                        <button type="submit" class="btn btn-accent mt-4">Salvar Alterações</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Nova/Editar Missão -->
+    <div id="admin-event-modal" class="modal">
+        <div class="modal-content">
+            <span class="btn-close-x" onclick="closeAdminModal()">&times;</span>
+            <h3 id="form-title" class="mb-2rem text-lg">Nova Missão</h3>
+            <form id="event-manager-form">
+                <input type="hidden" id="edit-id">
+                <div class="form-group">
+                    <label>Data da Atividade</label>
+                    <input type="date" id="ev-dia" required>
+                </div>
+                <div class="form-group">
+                    <label>Horário</label>
+                    <input type="text" id="ev-horario" placeholder="ex: 14:00 às 18:00">
+                </div>
+                <div class="form-group">
+                    <label>Título da Missão</label>
+                    <input type="text" id="ev-evento" placeholder="Nome do evento" required>
+                </div>
+                <div class="form-group">
+                    <label>Descrição Detalhada</label>
+                    <textarea id="ev-descricao" rows="4" placeholder="O que faremos nessa missão?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Responsável / Local</label>
+                    <input type="text" id="ev-responsavel" placeholder="Pessoa ou local específico">
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mt-4">Salvar Missão</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../config/supabase.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        function switchSection(name) {
+            // Atualizar abas
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-' + name).classList.add('active');
+            
+            // Atualizar seções
+            document.querySelectorAll('.admin-section-hidden').forEach(s => s.classList.remove('show'));
+            document.getElementById('sec-' + name).classList.add('show');
+            
+            if(name === 'config') window.loadAdminConfigs();
+        }
+        
+        function openNewEventModal() {
+            document.getElementById('event-manager-form').reset();
+            document.getElementById('edit-id').value = '';
+            document.getElementById('form-title').innerText = 'Nova Missão';
+            document.getElementById('admin-event-modal').classList.add('show');
+        }
+        
+        window.closeAdminModal = () => {
+            document.getElementById('admin-event-modal').classList.remove('show');
+        }
+    </script>
+</body>
+</html>
