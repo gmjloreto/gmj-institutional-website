@@ -519,7 +519,7 @@ input:focus, textarea:focus { outline: none; border-color: var(--accent); backgr
 .footer-links li { margin-bottom: 0.75rem; }
 .footer-links a { color: var(--gray-400); font-size: 0.875rem; }
 .footer-links a:hover { color: var(--accent); }
-.footer-bottom { border-top: 1px solid var(--gray-800); padding-top: 2rem; color: var(--gray-500); font-size: 0.75rem; }
+.footer-bottom { border-top: 1px solid var(--gray-800); padding-top: 2rem; color: var(--gray-500); font-size: 0.75rem;}    
 
 /* --- UTILITIES --- */
 .mt-4 { margin-top: 1rem; }
