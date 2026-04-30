@@ -363,3 +363,51 @@ function showToast(msg, type = 'success') {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
+
+/* Mobile Menu Toggle Logic */
+document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener("click", () => {
+            menuToggle.classList.toggle("active");
+            navLinks.classList.toggle("active");
+            // Impede o scroll do body quando o menu est� aberto
+            document.body.style.overflow = navLinks.classList.contains("active") ? "hidden" : "initial";
+        });
+
+        // Fechar ao clicar em um link
+        navLinks.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                menuToggle.classList.remove("active");
+                navLinks.classList.remove("active");
+                document.body.style.overflow = "initial";
+            });
+        });
+    }
+});
+
+/* --- MATERIAL 3 MOTION LOGIC (CLEAN) --- */
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Intersection Observer for Material Reveals
+    const revealOptions = {
+        threshold: 0.10,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+            }
+        });
+    }, revealOptions);
+
+    // Aplica a classe de revelação em seções e cards principais
+    const elementsToReveal = document.querySelectorAll(".section, .qa-card, .pillar-card, .mission-event-card, .about-image, .content-featured");
+    elementsToReveal.forEach(el => {
+        el.classList.add("m3-reveal");
+        revealObserver.observe(el);
+    });
+});
