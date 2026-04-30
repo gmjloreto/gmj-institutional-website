@@ -1,12 +1,13 @@
 /**
- * GMJ Loreto - UI Controller (Version 2.4 - Calendar & Popup Fixed)
+ * GMJ Loreto - UI Controller (Version 2.5 - Consolidated Animations)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     initStickyNav();
     initScrollReveal();
+    initMobileMenu();
     
-    // Identificação de Página
+    // Identificação de Página e Carga de Dados
     if (document.getElementById('group-schedule')) loadHomeData();
     if (document.getElementById('calendar-grid')) initCalendar();
     if (document.getElementById('drive-link')) loadDriveLink();
@@ -24,12 +25,61 @@ function initStickyNav() {
 }
 
 function initScrollReveal() {
-    const observer = new IntersectionObserver((entries) => {
+    // 1. Configuração do Observer
+    const revealOptions = {
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('active');
+            if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+                revealObserver.unobserve(entry.target);
+            }
         });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }, revealOptions);
+
+    // 2. Seleção de elementos
+    const targets = document.querySelectorAll(
+        ".reveal, .section, .qa-card, .pillar-card, .mission-event-card, .about-image, .content-featured, .hero-content"
+    );
+
+    targets.forEach(el => {
+        // Se não for .reveal (que já tem estilo no CSS), adicionamos .m3-reveal
+        if (!el.classList.contains('reveal')) {
+            el.classList.add("m3-reveal");
+        }
+        
+        // Caso Especial: Hero Content e Headers
+        // Elementos no topo da página devem ser ativados quase imediatamente para evitar falhas
+        if (el.classList.contains('hero-content') || el.tagName === 'HEADER' || el.classList.contains('hero')) {
+            setTimeout(() => el.classList.add("active"), 150);
+        } else {
+            revealObserver.observe(el);
+        }
+    });
+}
+
+function initMobileMenu() {
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+
+    if (menuToggle && navLinks) {
+        menuToggle.onclick = () => {
+            menuToggle.classList.toggle("active");
+            navLinks.classList.toggle("active");
+            document.body.style.overflow = navLinks.classList.contains("active") ? "hidden" : "initial";
+        };
+
+        navLinks.querySelectorAll("a").forEach(link => {
+            link.onclick = () => {
+                menuToggle.classList.remove("active");
+                navLinks.classList.remove("active");
+                document.body.style.overflow = "initial";
+            };
+        });
+    }
 }
 
 /* --- CALENDAR LOGIC (mission.html) --- */
@@ -52,33 +102,28 @@ async function renderCalendar() {
     const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
     display.innerText = `${months[currMonth]} ${currYear}`;
 
-    // Limpar dias mantendo apenas os headers (Dom, Seg...)
     const headers = Array.from(grid.querySelectorAll('.day-header'));
     grid.innerHTML = '';
     headers.forEach(h => grid.appendChild(h));
 
-    // Datas limites corretas para o mês
     const firstDay = new Date(currYear, currMonth, 1).getDay();
     const daysInMonth = new Date(currYear, currMonth + 1, 0).getDate();
     
     const startDate = `${currYear}-${String(currMonth + 1).padStart(2, '0')}-01`;
     const endDate = `${currYear}-${String(currMonth + 1).padStart(2, '0')}-${String(daysInMonth).padStart(2, '0')}`;
     
-    // Buscar missões do mês
     const { data: events } = await window.supabaseClient
         .from('eventos')
         .select('*')
         .gte('dia', startDate)
         .lte('dia', endDate);
 
-    // Espaços vazios antes do dia 1
     for (let i = 0; i < firstDay; i++) {
         const empty = document.createElement('div');
         empty.className = 'day-cell';
         grid.appendChild(empty);
     }
 
-    // Gerar dias do mês
     const listContainer = document.getElementById('missions-month-list');
     if(listContainer) listContainer.innerHTML = '';
 
@@ -94,7 +139,6 @@ async function renderCalendar() {
             cell.classList.add('has-event');
             cell.onclick = (e) => { e.stopPropagation(); openMissionPopup(dayEvt); };
             
-            // Adicionar à lista lateral se estivermos na página de missões
             if(listContainer) {
                 const item = document.createElement('div');
                 item.className = 'mission-event-card';
@@ -120,7 +164,6 @@ async function renderCalendar() {
             }
         }
         
-        // Marcar dia atual
         const today = new Date();
         if (day === today.getDate() && currMonth === today.getMonth() && currYear === today.getFullYear()) {
             cell.classList.add('today');
@@ -139,7 +182,6 @@ function openMissionPopup(evt) {
     if(!modal) return;
     
     document.getElementById('modal-title').innerText = evt.evento;
-    // Formatar data para exibição BR
     const [y, m, d] = evt.dia.split('-');
     document.getElementById('modal-date').innerText = `${d}/${m}/${y}`;
     document.getElementById('modal-time').innerText = evt.horario || 'A definir';
@@ -165,7 +207,6 @@ async function loadHomeData() {
             if (c.id === 'local_grupo' && loc) loc.innerText = c.value;
         });
     }
-    // Preview de próximas 3 missões a partir de hoje
     const todayStr = new Date().toISOString().split('T')[0];
     const { data: evts } = await window.supabaseClient
         .from('eventos')
@@ -211,7 +252,6 @@ async function initAdminPage() {
     const eventForm = document.getElementById('event-manager-form');
     const configForm = document.getElementById('config-manager-form');
 
-    // Auto login
     const { data: { user } } = await window.supabaseClient.auth.getUser();
     if (user) checkAdmin(user);
 
@@ -363,51 +403,3 @@ function showToast(msg, type = 'success') {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
-
-/* Mobile Menu Toggle Logic */
-document.addEventListener("DOMContentLoaded", () => {
-    const menuToggle = document.getElementById("menu-toggle");
-    const navLinks = document.getElementById("nav-links");
-
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener("click", () => {
-            menuToggle.classList.toggle("active");
-            navLinks.classList.toggle("active");
-            // Impede o scroll do body quando o menu est� aberto
-            document.body.style.overflow = navLinks.classList.contains("active") ? "hidden" : "initial";
-        });
-
-        // Fechar ao clicar em um link
-        navLinks.querySelectorAll("a").forEach(link => {
-            link.addEventListener("click", () => {
-                menuToggle.classList.remove("active");
-                navLinks.classList.remove("active");
-                document.body.style.overflow = "initial";
-            });
-        });
-    }
-});
-
-/* --- MATERIAL 3 MOTION LOGIC (CLEAN) --- */
-document.addEventListener("DOMContentLoaded", () => {
-    // 1. Intersection Observer for Material Reveals
-    const revealOptions = {
-        threshold: 0.10,
-        rootMargin: "0px 0px -50px 0px"
-    };
-
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("active");
-            }
-        });
-    }, revealOptions);
-
-    // Aplica a classe de revelação em seções e cards principais
-    const elementsToReveal = document.querySelectorAll(".section, .qa-card, .pillar-card, .mission-event-card, .about-image, .content-featured");
-    elementsToReveal.forEach(el => {
-        el.classList.add("m3-reveal");
-        revealObserver.observe(el);
-    });
-});
