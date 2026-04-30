@@ -42,7 +42,3 @@ Este é o site oficial do **Grupo Missionário Jovem (GMJ) Loreto**, da Paróqui
 1. Clone o repositório.
 2. Certifique-se de configurar as chaves do Supabase em `config/supabase.js`.
 3. Abra o `index.html` em um servidor local (recomenda-se a extensão *Live Server* do VS Code).
-
-## 📄 Licença
-
-Este projeto é de uso exclusivo do GMJ Loreto. Todos os direitos reservados &copy; 2026.
