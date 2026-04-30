@@ -57,10 +57,12 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
     width: 100%;
     max-width: 1200px; 
     margin: 0 auto; 
-    padding: 0 1rem; /* Mobile: menor padding */
+    padding: 0 1.5rem; /* MUDOU: era 1rem, agora 1.5rem */
 }
 
-.section { padding: 2rem 0; } /* Mobile: menor espaçamento */
+.section { 
+    padding: 2rem 1.5rem; /* MUDOU: adiciona padding horizontal */
+}
 .section-no-top-padding { padding-top: 0; }
 .section-alt { background: var(--gray-50); }
 
@@ -168,12 +170,12 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 }
 
 .hero-content {
-    text-align: center; /* Mobile: centralizado */
+    text-align: center;
     max-width: 100%;
     margin: 0 auto;
     position: relative;
     z-index: 2;
-    padding: 0 1rem;
+    padding: 0 1.5rem; /* MUDOU: era 1rem, agora 1.5rem */
 }
 
 .hero-content h1 {
@@ -224,6 +226,58 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
     color: var(--gray-400); 
     text-transform: uppercase; 
     letter-spacing: 0.1em; 
+}
+
+/* --- CORREÇÕES DE PADDING LATERAL MOBILE --- */
+
+/* Hero precisa de padding lateral */
+.hero-content {
+    padding: 0 1.5rem; /* Aumentei de 1rem para 1.5rem */
+}
+
+/* Seções principais precisam de padding lateral garantido */
+.section {
+    padding: 2rem 1.5rem; /* Adiciona padding lateral */
+}
+
+/* Modal precisa de mais padding lateral no mobile */
+.modal {
+    padding: 1.5rem; /* Aumentei de 1rem para 1.5rem */
+}
+
+/* Cards que podem estar encostando */
+.qa-card,
+.pillar-card,
+.mission-event-card,
+.content-card,
+.form-card,
+.contact-info-card,
+.contribution-banner,
+.month-summary-card {
+    margin: 0 0.5rem; /* Adiciona margem lateral em todos os cards */
+}
+
+/* Garante que o container tenha padding mínimo sempre */
+.container {
+    padding: 0 1.5rem; /* Aumentei de 1rem para 1.5rem */
+}
+
+/* Footer precisa de padding lateral também */
+.footer {
+    padding: 4rem 1.5rem 2rem 1.5rem; /* Adiciona padding lateral */
+}
+
+/* Texto de conteúdo que pode encostar */
+.featured-text,
+.event-content,
+.content-body {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+/* Tabela admin precisa de padding no container em mobile */
+.admin-table-card {
+    margin: 0 1rem; /* Adiciona margem lateral */
 }
 
 /* --- QUICK ACCESS (Mobile-First) --- */
@@ -831,13 +885,14 @@ input:focus, textarea:focus {
 /* --- FOOTER (Mobile-First) --- */
 .p-no-margin{
     color: var(--gray-600);
-
 }
+
 .footer { 
     background: var(--gray-900); 
     color: var(--white); 
-    padding: 4rem 0 2rem 0; 
+    padding: 4rem 1.5rem 2rem 1.5rem; /* MUDOU: adiciona padding lateral */
 }
+
 .footer-grid { 
     display: grid; 
     grid-template-columns: 1fr; /* Mobile: coluna única */
@@ -1209,4 +1264,230 @@ input:focus, textarea:focus {
 /* --- LARGE DESKTOP (1200px+) --- */
 @media (min-width: 1200px) {
     .hero::after { height: 150px; }
+}
+
+/* --- CORREÇÃO DE MARGIN BOTTOM --- */
+
+/* Garante margin bottom em seções antes do footer */
+.section:last-of-type,
+.container:last-of-type {
+    margin-bottom: 3rem; /* Mobile: espaço antes do footer */
+}
+
+/* Alternativa mais específica se a anterior não funcionar */
+.text-center:last-child {
+    margin-bottom: 3rem;
+}
+
+/* Ou adicione padding-top no footer para garantir */
+.footer {
+    background: var(--gray-900);
+    color: var(--white);
+    padding: 5rem 1.5rem 2rem 1.5rem; /* MUDOU: aumentei o padding-top de 4rem para 5rem */
+}
+/* --- MOBILE MENU BURGER (Additive) --- */
+@media (max-width: 1024px) {
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 30px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        z-index: 1100;
+    }
+
+    .menu-toggle span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: var(--primary);
+        border-radius: 2px;
+        transition: var(--transition);
+    }
+
+    /* Anima��o do X */
+    .menu-toggle.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 280px;
+        height: 100vh;
+        background: var(--white);
+        padding: 80px 2rem 2rem;
+        box-shadow: var(--shadow-xl);
+        z-index: 1050;
+        animation: m3-enter 0.3s ease;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        font-size: 1.25rem;
+        padding-block: 1rem;
+        border-bottom: 1px solid var(--gray-50);
+        width: 100%;
+    }
+
+    /* Esconder o bot�o de CTA no mobile para n�o poluir a nav */
+    .nav-actions .btn-primary {
+        display: none;
+    }
+}
+
+@media (min-width: 1025px) {
+    .menu-toggle {
+        display: none;
+    }
+}
+/* --- CORREÇÃO DE MARGIN TOP NA PRIMEIRA DIV --- */
+
+/* Garante margin-top na primeira section após a navbar */
+.section:first-of-type {
+    margin-top: 2rem; /* Mobile: espaço após navbar */
+}
+
+/* Caso a primeira div seja um container sem classe section */
+.navbar ~ .container:first-of-type,
+.navbar ~ section:first-of-type,
+.navbar ~ div:first-of-type {
+    margin-top: 2rem;
+}
+
+/* Para páginas que começam direto com conteúdo */
+main > .section:first-child,
+main > .container:first-child {
+    margin-top: 2rem;
+}
+
+/* Se houver uma section logo após o hero */
+.hero + .section,
+.hero + .container {
+    margin-top: 0; /* Hero já tem espaçamento próprio */
+}
+
+/* Ajuste para tablet e desktop */
+@media (min-width: 768px) {
+    .section:first-of-type,
+    .navbar ~ .container:first-of-type,
+    .navbar ~ section:first-of-type,
+    .navbar ~ div:first-of-type,
+    main > .section:first-child,
+    main > .container:first-child {
+        margin-top: 3rem; /* Maior espaçamento em telas maiores */
+    }
+}
+
+/* --- MOBILE MENU FIX (Layering & Visibility) --- */
+@media (max-width: 1024px) {
+    /* Garante que o bot�o esteja SEMPRE acima do menu lateral */
+    .menu-toggle {
+        position: relative;
+        z-index: 2000 !important; 
+    }
+
+    .nav-links {
+        z-index: 1500 !important;
+        /* Pequeno ajuste para garantir que o fundo branco n�o sobreponha o bot�o */
+        background-color: var(--white);
+    }
+}
+
+/* --- MOBILE MENU FIX (Final Adjustment) --- */
+@media (max-width: 1024px) {
+    /* Garante que o �cone do X seja vis�vel e mude de cor se o fundo do menu for escuro */
+    .menu-toggle.active span {
+        background-color: var(--primary) !important;
+    }
+    
+    /* Previne qualquer sobreposi��o por elementos absolutos */
+    .navbar .container {
+        position: relative;
+    }
+}
+
+/* --- MATERIAL 3 EXPRESSIVE MOTION (Additive) --- */
+
+:root {
+    /* M3 Easing Tokens */
+    --m3-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --m3-ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+    --m3-duration-short: 200ms;
+    --m3-duration-medium: 400ms;
+    --m3-duration-long: 700ms;
+}
+
+/* Expressive Entrances */
+.m3-reveal {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    transition: opacity var(--m3-duration-long) var(--m3-ease-emphasized), 
+                transform var(--m3-duration-long) var(--m3-ease-emphasized);
+    will-change: opacity, transform;
+}
+
+.m3-reveal.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Shared Axis Transition (Horizontal) */
+.m3-shared-axis-x {
+    animation: m3-axis-x var(--m3-duration-medium) var(--m3-ease-standard) forwards;
+}
+
+@keyframes m3-axis-x {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Interaction States (Ripple-like effect) */
+.btn, .qa-card, .pillar-card, .mission-event-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--m3-duration-short) var(--m3-ease-standard), 
+                box-shadow var(--m3-duration-short) var(--m3-ease-standard),
+                background-color var(--m3-duration-short) var(--m3-ease-standard);
+}
+
+.btn:active, .qa-card:active {
+    transform: scale(0.96);
+}
+
+/* Hover elevation for M3 */
+.qa-card:hover {
+    box-shadow: var(--shadow-xl);
+    background-color: var(--gray-50);
+}
+
+
+/* --- COMPACT SECTION (Fluid & Responsive) --- */
+.section.section-alt {
+    width: min(1200px, 100% - 2rem);
+    margin-inline: auto;
+    min-height: 120px;
+    padding-block: clamp(1.5rem, 3vw, 2rem); 
+    display: flex;
+    align-items: center;
+    border-radius: var(--radius-xl);
+    background-color: var(--gray-50);
+}
+
+@media (max-width: 768px) {
+    .section.section-alt {
+        flex-direction: column;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        width: calc(100% - 2rem);
+    }
 }
