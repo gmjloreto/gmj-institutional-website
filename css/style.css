@@ -1153,6 +1153,7 @@ input:focus, textarea:focus {
     }
     .contribution-banner p {
         max-width: 600px;
+        margin-inline: auto;
     }
     
     .calendar-wrapper { padding: 2rem; }
