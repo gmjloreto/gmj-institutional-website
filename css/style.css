@@ -320,7 +320,7 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
     position: relative;
     border-radius: var(--radius-xl);
     overflow: hidden;
-    aspect-ratio: 16/9; /* Mobile: mais largo */
+    aspect-ratio: 2/3;
     background-image: url('https://i.ibb.co/MyHCfT2J/150-MG-4851.webp');
     background-size: cover;
     background-position: center;
