@@ -321,7 +321,7 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
     border-radius: var(--radius-xl);
     overflow: hidden;
     aspect-ratio: 16/9; /* Mobile: mais largo */
-    background-image: url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=800');
+    background-image: url('https://i.ibb.co/MyHCfT2J/150-MG-4851.webp');
     background-size: cover;
     background-position: center;
 }
