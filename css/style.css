@@ -147,7 +147,7 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 .hero {
     position: relative;
     background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 100%), 
-                url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&q=80&w=2000');
+                url('https://files.catbox.moe/n3ikt0.webp');
     background-size: cover;
     background-position: center;
     min-height: 100vh; /* Mobile: altura mínima */
