@@ -7,21 +7,21 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://gmjloreto.com.br/mission</loc>
+        <loc>https://gmjloreto.com.br/donation</loc>
         <lastmod>2026-04-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://gmjloreto.com.br/content</loc>
+        <loc>https://gmjloreto.com.br/mission</loc>
         <lastmod>2026-04-29</lastmod>
-        <changefreq>monthly</changefreq>
+        <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://gmjloreto.com.br/contact</loc>
+        <loc>https://gmjloreto.com.br/content</loc>
         <lastmod>2026-04-29</lastmod>
-        <changefreq>yearly</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
 </urlset>
